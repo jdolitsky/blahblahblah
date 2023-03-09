@@ -1,0 +1,18 @@
+on:
+  push:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
+    steps:
+      - uses: chainguard-dev/actions/setup-chainctl@main
+        with:
+          environment: enforce.dev
+          identity: 849bf3cd15c424f4babfc86cb606bb1569b0dbc8/d11dd165d183cf8f
+      - run: |
+          docker pull alpine
+          docker tag alpine registry.enforce.dev/849bf3cd15c424f4babfc86cb606bb1569b0dbc8/from-gha
+          docker push registry.enforce.dev/849bf3cd15c424f4babfc86cb606bb1569b0dbc8/from-gha
